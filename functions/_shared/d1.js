@@ -22,7 +22,6 @@
   )`);
   await db.exec(`CREATE INDEX IF NOT EXISTS idx_tx_exp ON transactions(expires_at)`);
   await db.exec(`CREATE INDEX IF NOT EXISTS idx_sess_exp ON sessions(expires_at)`);
-  // limpeza oportunista
   const now = Math.floor(Date.now()/1000);
   await db.batch([
     db.prepare(`DELETE FROM transactions WHERE expires_at < ?`).bind(now),

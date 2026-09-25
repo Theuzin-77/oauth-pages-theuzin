@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OAuth Pages - Theuzin</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>🔐 OAuth Pages</h1>
+      <p id="status">Verificando login...</p>
+      
+      <div class="buttons">
+        <button class="btn google" onclick="login('google')">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20"/> Login com Google
+        </button>
+        <button class="btn github" onclick="login('github')">
+          <img src="https://www.svgrepo.com/show/512317/github-142.svg" width="20" style="filter:invert(1)"/> Login com GitHub
+        </button>
+        <button class="btn logout" id="btnLogout" onclick="logout()" style="display:none">Sair</button>
+      </div>
+
+      <h3>/api/me</h3>
+      <pre id="me">carregando...</pre>
+      <h3>/api/health</h3>
+      <pre id="health">carregando...</pre>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

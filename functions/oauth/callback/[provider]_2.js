@@ -8,16 +8,14 @@ export async function onRequest(context){
   const providerName = context.params.provider;
   const url = new URL(context.request.url);
   const headersBase = noStoreHeaders();
-
   try{
     const provider = getProvider(providerName);
     if(!context.env.DB) return new Response('Falta DB', { status:500, headers: headersBase });
     await ensureTables(context.env.DB);
 
     const errParam = url.searchParams.get('error');
-    if(errParam){
-      return new Response(`Authorization error: ${errParam}`, { status:400, headers: headersBase });
-    }
+    if(errParam) return new Response(`Authorization error: ${errParam}`, { status:400, headers: headersBase });
+
     const code = url.searchParams.get('code');
     const state = url.searchParams.get('state');
     if(!code || !state) return new Response('Falta code ou state', { status:400, headers: headersBase });
@@ -29,7 +27,6 @@ export async function onRequest(context){
     const txHash = await sha256B64url(txCookie);
     const stateHash = await sha256B64url(state);
 
-    // busca transação
     const row = await context.env.DB.prepare(
       `SELECT * FROM transactions WHERE tx_hash = ? AND provider = ?`
     ).bind(txHash, providerName).first();
@@ -44,7 +41,7 @@ export async function onRequest(context){
       return new Response('State inválido', { status:400, headers: headersBase });
     }
 
-    // Apaga ANTES de concluir (previne replay)
+    // Apaga ANTES de concluir (previne replay) - exigência PDF 13.4
     await context.env.DB.prepare(`DELETE FROM transactions WHERE tx_hash = ?`).bind(txHash).run();
 
     const publicBase = context.env.PUBLIC_BASE_URL || url.origin;
@@ -69,7 +66,7 @@ export async function onRequest(context){
       const accessToken = tokenData.access_token;
       if(!accessToken) throw new Error('access_token ausente');
       const ghUser = await fetchGithubUser(accessToken);
-      // revoga imediatamente antes de criar sessão local
+      // revoga imediatamente antes de criar sessão local - exigência PDF 13.2
       await revokeGithubGrant(context.env[provider.clientIdKey], context.env[provider.clientSecretKey], accessToken);
       userInfo = {
         id: String(ghUser.id),
@@ -80,30 +77,14 @@ export async function onRequest(context){
       };
     }
 
-    // cria sessão 8h
     const sessionId = randomB64url(32);
     const sessionHash = await sha256B64url(sessionId);
     const now = nowSec();
-    const sessExp = now + 28800;
+    const sessExp = now + 28800; // 8h
 
     await context.env.DB.prepare(
       `INSERT INTO sessions (session_hash, provider, user_id, email, name, avatar, login, created_at, expires_at) VALUES (?,?,?,?,?,?,?,?,?)`
-      // typo fix: 8 placeholders actually 9? let's correct
-    ).bind(sessionHash, providerName, userInfo.id, userInfo.email||null, userInfo.name||null, userInfo.avatar||null, userInfo.login||null, now, sessExp).run().catch(async (e)=>{
-      // fallback se contagem errada
-      await context.env.DB.prepare(
-        `INSERT INTO sessions (session_hash, provider, user_id, email, name, avatar, login, created_at, expires_at) VALUES (?,?,?,?,?,?,?, ?,?)`
-      ).bind(sessionHash, providerName, userInfo.id, userInfo.email||null, userInfo.name||null, userInfo.avatar||null, userInfo.login||null, now, sessExp).run();
-    });
-
-    // corrige: recria com query certa (evita erro anterior)
-    // Na verdade vamos usar query final correta abaixo se a anterior falhou, mas garante
-    const check = await context.env.DB.prepare(`SELECT session_hash FROM sessions WHERE session_hash=?`).bind(sessionHash).first();
-    if(!check){
-      await context.env.DB.prepare(
-        `INSERT INTO sessions (session_hash, provider, user_id, email, name, avatar, login, created_at, expires_at) VALUES (?,?,?,?,?,?,?, ?,?)`
-      ).bind(sessionHash, providerName, userInfo.id, userInfo.email||null, userInfo.name||null, userInfo.avatar||null, userInfo.login||null, now, sessExp).run();
-    }
+    ).bind(sessionHash, providerName, userInfo.id, userInfo.email||null, userInfo.name||null, userInfo.avatar||null, userInfo.login||null, now, sessExp).run();
 
     const headers = new Headers();
     headers.set('Location','/');
@@ -112,7 +93,6 @@ export async function onRequest(context){
     for(const [k,v] of Object.entries(headersBase)) headers.set(k,v);
 
     return new Response(null, { status:302, headers });
-
   }catch(e){
     return new Response(`Erro callback ${providerName}: ${e.message}`, { status:500, headers: headersBase });
   }

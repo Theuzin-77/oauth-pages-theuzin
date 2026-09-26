@@ -1,5 +1,0 @@
-﻿*{box-sizing:border-box}body{font-family:system-ui;background:#0f172a;color:#e2e8f0;display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0}
-.card{background:#1e293b;padding:32px;border-radius:16px;max-width:560px;width:90%;box-shadow:0 10px 30px rgba(0,0,0,.4)}
-button{padding:10px 16px;border-radius:8px;border:0;background:#3b82f6;color:white;margin:4px;cursor:pointer}
-button:hover{background:#2563eb}
-pre{background:#0f172a;padding:12px;border-radius:8px;overflow:auto;font-size:12px;margin-top:12px}

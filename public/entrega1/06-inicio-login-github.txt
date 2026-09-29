@@ -1,0 +1,17 @@
+URL da solicitacao
+https://oauth-pages-theuzin.pages.dev/oauth/login/github
+Metodo: GET
+Codigo: 302 Found
+
+Response Headers:
+set-cookie: __Host-oauth-tx=NuI24cRG0KOXfmldO8AB8UfG_um4M7rTGTu0XVH6Z_c; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=600
+location: https://github.com/login/oauth/authorize?client_id=Ov23liZYC4gwfmrjcfFO&redirect_uri=https%3A%2F%2Foauth-pages-theuzin.pages.dev%2Foauth%2Fcallback%2Fgithub&response_type=code&state=8DOIfznnyaQtIkP_OjJZtmt6ODpjnqB73MUta6r1qD4&code_challenge=UAAvz70dlhADtLFWbO1NxFpLWnzklnQkGKQw_XJ7cLs&code_challenge_method=S256
+cache-control: no-store
+
+Validacoes cap 15:
+- code_challenge_method=S256 OK
+- state presente OK
+- sem client_secret OK
+- __Host- + HttpOnly + Secure + SameSite=Lax + Path=/ OK
+- Max-Age 600 = 10 min OK
+- redirect_uri confere com deploy OK

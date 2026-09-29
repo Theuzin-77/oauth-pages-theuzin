@@ -1,0 +1,15 @@
+URL: https://oauth-pages-theuzin.pages.dev/oauth/login/google
+Status: 302 Found
+
+Response Headers:
+set-cookie: __Host-oauth-tx=KnKgJ5YdRRQ3XtQOBB8OvCnFxzNW-U_KSW0dNaqYj6c; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=600
+location: https://accounts.google.com/o/oauth2/v2/auth?client_id=351920027844-53iingup85i9hlnj2vqdgq4kos82i1m5.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Foauth-pages-theuzin.pages.dev%2Foauth%2Fcallback%2Fgoogle&response_type=code&state=SA0oBiiB3Glb1-w-kKDa_G33MoBTE3RFyvsuwh7rkp8&code_challenge=qpN8D_RCfF1OqpRETS8xKV1rvowL4sVZCXqqY740U4w&code_challenge_method=S256&scope=openid+email+profile&nonce=gRFs-naG6BOnaJQ8W2KvKXKzq4xZxFHqXjx5AfI9gn8&access_type=offline&prompt=consent
+cache-control: no-store
+
+Validacoes:
+- code_challenge_method=S256 OK
+- state presente OK
+- nonce presente OK
+- sem client_secret OK
+- __Host- prefix + HttpOnly + Secure + SameSite=Lax + Path=/ OK
+- Max-Age=600 (10 min) OK

@@ -107,8 +107,8 @@ export async function onRequest(context){
 
     const headers = new Headers();
     headers.set('Location','/');
-    headers.append('Set-Cookie', setHostCookie('__Host-session', sessionId, { path:'/', sameSite:'Strict', maxAge:28800 }));
-    headers.append('Set-Cookie', clearHostCookie('__Host-oauth-tx', { path:'/', sameSite:'Lax' }));
+headers.append('Set-Cookie', setHostCookie('__Host-session', sessionId, { path:'/', sameSite:'Strict', maxAge:28800 })); // 1 - CRIA sessão (Strict tá certo)
+headers.append('Set-Cookie', clearHostCookie('__Host-oauth-tx', { path:'/', sameSite:'None' }));
     for(const [k,v] of Object.entries(headersBase)) headers.set(k,v);
 
     return new Response(null, { status:302, headers });

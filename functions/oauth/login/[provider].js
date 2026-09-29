@@ -54,7 +54,7 @@ export async function onRequest(context){
 
     const headers = new Headers();
     headers.set('Location', authUrl.toString());
-    headers.append('Set-Cookie', setHostCookie('__Host-oauth-tx', tx, { path:'/', sameSite:'Lax', maxAge:600 }));
+    headers.append('Set-Cookie', setHostCookie('__Host-oauth-tx', tx, { path:'/', sameSite:'None', maxAge:600 }))
     for(const [k,v] of Object.entries(noStoreHeaders())) headers.set(k,v);
 
     return new Response(null, { status:302, headers });

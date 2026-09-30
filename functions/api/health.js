@@ -1,4 +1,6 @@
-﻿import { noStoreHeaders } from '../_shared/cookies.js';
-export async function onRequest(){
-  return new Response(JSON.stringify({ ok:true, time:new Date().toISOString() }), { headers:{ 'Content-Type':'application/json', ...noStoreHeaders() } });
+﻿export function onRequestGet() {
+ return Response.json(
+ { status: "ok" },
+ { headers: { "Cache-Control": "no-store" } }
+ );
 }

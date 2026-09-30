@@ -1,0 +1,28 @@
+URL da solicitação
+https://oauth-pages-theuzin.pages.dev/oauth/callback/google?state=TqwEj5itLE1EAoDiu4IIVURvMOyrjbyJImeWfyO4jrM&iss=https%3A%2F%2Faccounts.google.com&code=4%2F0AXlqoi4E6qAaLHFCAVJUp1RfBMHhkwMy6QksUCsYnV89oROo6jPL2GLxNYTwq8nw6Pvw3w&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=0&prompt=consent
+Método da solicitação
+GET
+Código de status
+302 Found
+
+--- Cabeçalhos de Resposta ---
+cache-control: no-store
+content-length: 0
+cf-ray: a42ce194dc90920d-GRU
+date: Tue, 29 Sep 2026 17:59:23 GMT
+location: /
+pragma: no-cache
+server: cloudflare
+set-cookie: __Host-session=YDKOfJTlR9x9IyFYFREcqpmyLLJ_Q88zIvIjjbFnp5A; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=28800
+set-cookie: __Host-oauth-tx=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0
+
+--- Validação Cap 15 ---
+✓ Status 302 Found OK (corrigiu o 400 Transação ausente)
+✓ location: / OK
+✓ __Host-session: HttpOnly + Secure + SameSite=Strict + Path=/ + Max-Age=28800 (8h) + 43 chars base64url OK
+✓ __Host-oauth-tx: Max-Age=0 OK (limpeza anti-replay, transação deletada ANTES de criar sessão)
+✓ state=TqwEj5itLE1EAoDiu4IIVURvMOyrjbyJImeWfyO4jrM bate com 05-inicio OK (43 chars)
+✓ code=4/0AXlqoi4... presente OK (Authorization Code usado uma vez só)
+✓ server: cloudflare OK
+✓ no-store OK
+✓ cookie de entrada __Host-oauth-tx=QcNf0GqBeyTFjuaTKxOQtXq4Z7mm-6m9zi945tPeDGY presente OK (prova que leu transação do D1)

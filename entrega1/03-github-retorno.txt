@@ -1,0 +1,28 @@
+URL da solicitação
+https://oauth-pages-theuzin.pages.dev/oauth/callback/github?code=4c57ce0f21a5ac8b7ea9&iss=https%3A%2F%2Fgithub.com%2Flogin%2Foauth&state=NhvCuvW70ctErgHz6UrtQi4R3sU-5C6eCeD0DSPV-u4
+Método da solicitação
+GET
+Código de status
+302 Found
+
+--- Cabeçalhos de Resposta ---
+cache-control: no-store
+content-length: 0
+cf-ray: a42cee109a1fa414-GRU
+date: Tue, 29 Sep 2026 18:07:54 GMT
+location: /
+pragma: no-cache
+server: cloudflare
+set-cookie: __Host-session=xfzky7E-dMXlEaWAnm_3xi5TfXJaDte2tbFbrBzE1es; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=28800
+set-cookie: __Host-oauth-tx=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0
+
+--- Validação Cap 15 ---
+✓ Status 302 Found OK
+✓ location: / OK
+✓ __Host-session: HttpOnly + Secure + SameSite=Strict + Path=/ + Max-Age=28800 (8h) + 43 chars OK (xfzky7E-...)
+✓ __Host-oauth-tx: Max-Age=0 OK (limpeza anti-replay)
+✓ state=NhvCuvW70ctErgHz6UrtQi4R3sU-5C6eCeD0DSPV-u4 (43 chars) OK
+✓ code=4c57ce0f21a5ac8b7ea9 presente OK (GitHub code)
+✓ cookie de entrada __Host-oauth-tx=wVY9R6H0-EmqVhNvs-OOE_WlB58KGkG1KUzYPIJOQbg OK (prova que leu transação do D1)
+✓ server: cloudflare OK
+✓ no-store OK

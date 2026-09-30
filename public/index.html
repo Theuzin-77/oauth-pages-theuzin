@@ -1,13 +1,44 @@
 ﻿<!doctype html>
 <html lang="pt-BR">
- <head>
- <meta charset="utf-8">
- <meta name="viewport" content="width=device-width, initial-scale=1">
- <title>Laboratório de autenticação</title>
- </head>
- <body>
- <main>
- <h1>Laboratório de autenticação</h1>
- <p id="status">A sessão ainda não foi consultada.</p>
- </main>
- </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laboratório de autenticação</title>
+  <style>
+    body{font-family:sans-serif;max-width:700px;margin:40px auto;padding:20px}
+    button{padding:10px 18px;margin:6px;cursor:pointer}
+    pre{background:#f4f4f4;padding:12px;white-space:pre-wrap;word-break:break-all}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Laboratório de autenticação</h1>
+    <p id="status">A sessão ainda não foi consultada.</p>
+    
+    <div>
+      <a href="/oauth/login/google"><button>Login com Google</button></a>
+      <a href="/oauth/login/github"><button>Login com GitHub</button></a>
+      <button id="btn-me">Consultar /api/me</button>
+      <button id="btn-health">/api/health</button>
+      <button id="btn-logout">Logout</button>
+    </div>
+    <pre id="out">...</pre>
+  </main>
+<script>
+async function show(url, opts){
+  const r = await fetch(url, opts);
+  const t = await r.text();
+  document.getElementById('out').textContent = `STATUS ${r.status}\n${t}`;
+}
+document.getElementById('btn-me').onclick = () => show('/api/me');
+document.getElementById('btn-health').onclick = () => show('/api/health');
+document.getElementById('btn-logout').onclick = async () => {
+  await fetch('/oauth/logout', {method:'POST'});
+  show('/api/me');
+};
+show('/api/me').then(()=>{
+  document.getElementById('status').textContent = 'Sessão consultada. Veja /api/me abaixo.';
+});
+</script>
+</body>
+</html>
